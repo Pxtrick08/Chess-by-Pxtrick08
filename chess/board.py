@@ -6,21 +6,24 @@ from .piece import *
 
 class Board:
     def __init__(self):
-        self.board = []
+        self.board = [
+            ["bR", "bN", "bB", "bQ", "bK", "bB", "bN", "bR"],
+            ["bP", "bP", "bP", "bP", "bP", "bP", "bP", "bP"],
+            ["--", "--","--", "--","--", "--","--", "--"],
+            ["--", "--","--", "--","--", "--","--", "--"],
+            ["--", "--","--", "--","--", "--","--", "--"],
+            ["--", "--","--", "--","--", "--","--", "--"],
+            ["wP", "wP", "wP", "wP", "wP", "wP", "wP", "wP"],
+            ["wR", "wN", "wB", "wQ", "wK", "wB", "wN", "wR"],
+        ]
+        # Create all pieces
         self.pieces = []
-        piece_ranks = [
-                    {"rank": "K", "value": 0, "piece_count": 1},
-                    {"rank": "Q", "value": 0, "piece_count": 1},
-                    {"rank": "R", "value": 0, "piece_count": 2},
-                    {"rank": "B", "value": 0, "piece_count": 2},  
-                    {"rank": "N", "value": 0, "piece_count": 2},
-                    {"rank": "P", "value": 0, "piece_count": 8}
-                ]
-        for color in COLORS:
-            for rank in piece_ranks:
-                for piece_number in range(rank["piece_count"]):
-                    piece_number += 1
-                    self.pieces.append(Piece(rank, color, piece_number))
+        for row in range(BOARD_SIZE):
+            for col in range( BOARD_SIZE):
+                code = self.board[row][col]
+                if code != "--":
+                    self.pieces.append(Piece(color = code[0], rank = code[1], start_pos = {"row": row, "col": col}))
+                
                 
                   
 
