@@ -1,34 +1,44 @@
 # BOARD CREATION
 
 import pygame
-from .constants import BOARD_SIZE, SQUARE_SIZE, WHITE, BLACK, COLORS
+from .constants import BOARD_SIZE, SQUARE_SIZE, WHITE, BLACK, BLUE, START_BOARD, PADDING
 from .piece import *
 
 class Board:
     def __init__(self):
-        self.board = [
-            ["bR", "bN", "bB", "bQ", "bK", "bB", "bN", "bR"],
-            ["bP", "bP", "bP", "bP", "bP", "bP", "bP", "bP"],
-            ["--", "--","--", "--","--", "--","--", "--"],
-            ["--", "--","--", "--","--", "--","--", "--"],
-            ["--", "--","--", "--","--", "--","--", "--"],
-            ["--", "--","--", "--","--", "--","--", "--"],
-            ["wP", "wP", "wP", "wP", "wP", "wP", "wP", "wP"],
-            ["wR", "wN", "wB", "wQ", "wK", "wB", "wN", "wR"],
-        ]
-        # Create all pieces
+        self.board = []
+        self.pieces = self.create_pieces()
+        
+                
+    def create_pieces(self):
         self.pieces = []
         for row in range(BOARD_SIZE):
+            self.board.append([])
             for col in range( BOARD_SIZE):
-                code = self.board[row][col]
+                code = START_BOARD[row][col]
                 if code != "--":
-                    self.pieces.append(Piece(color = code[0], rank = code[1], start_pos = {"row": row, "col": col}))
-                
-                
-                  
+                    self.board[row].append(Piece(color = code[0], rank = code[1], start_pos = {"row": row, "col": col}))
+                else:
+                    self.board[row].append("--")
+        return self.pieces   
+
+    def get_piece(self, row, col):
+        return self.board[row][col]
+         
 
     def draw_board_pattern(self, window):
         for row in range(BOARD_SIZE):
                 for col in range(BOARD_SIZE):
                     square_color = WHITE if (row + col) % 2 == 0 else BLACK
                     pygame.draw.rect(window, square_color, (col * SQUARE_SIZE, row * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE))
+
+    def validate_moves(self, moves):
+        pass
+
+    def draw_moves(self, window, piece, moves):
+        for move in moves:
+            row, col = move
+            pygame.draw.circle(window, BLUE, (col * SQUARE_SIZE + SQUARE_SIZE//2 , row * SQUARE_SIZE + SQUARE_SIZE//2), (SQUARE_SIZE//2-PADDING), width = 0)
+
+    def move(self, piece):
+        pass
