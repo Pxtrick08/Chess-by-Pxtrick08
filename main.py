@@ -2,6 +2,7 @@
 
 import pygame
 from chess.constants import WIDTH, HEIGHT, FPS, SQUARE_SIZE, BOARD_SIZE
+from chess.game import Game
 from chess.board import Board
 from chess.piece import Piece
 
@@ -20,35 +21,36 @@ def get_pos_mouseclick(pos):
 def main():
     running: bool = True
     clock = pygame.time.Clock()
-    board = Board()
+    game = Game()
+    #board = Board()
     selected_piece = "--"
 
     
 
     while running:
 
-        board.draw_board_pattern(WINDOW)
-        for row in board.board:
-            for piece in row:
-                if piece != "--":
-                    position = piece.calc_image_position()
-                    image = piece.load_img()
-                    scaled_image = pygame.transform.scale(image, (SQUARE_SIZE, SQUARE_SIZE))
-                    WINDOW.blit(scaled_image, position)
-
+        game.board.draw_board_pattern(WINDOW)
+        game.board.draw_pieces(WINDOW)
+        
+        
         # Check for user interaction 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
             if event.type == pygame.MOUSEBUTTONDOWN:
-                pos = pygame.mouse.get_pos()
-                row, col = get_pos_mouseclick(pos)
-                selected_piece = board.get_piece(row, col)
+                if selected_piece == "--":
+                    pos = pygame.mouse.get_pos()
+                    row, col = get_pos_mouseclick(pos)
+                    selected_piece = game.board.get_piece(row, col)
+                else:
+                    pos = pygame.mouse.get_pos()
+                    row, col = get_pos_mouseclick(pos)
+                    selected_piece.move((row, col), WINDOW)
                 
                 
         if selected_piece != "--":
-            board.draw_moves(WINDOW, selected_piece, selected_piece.movement)
-    
+            game.board.draw_moves(WINDOW, selected_piece.movement)
+
         pygame.display.flip()
         clock.tick(FPS)
 

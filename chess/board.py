@@ -8,8 +8,7 @@ class Board:
     def __init__(self):
         self.board = []
         self.pieces = self.create_pieces()
-        
-                
+         
     def create_pieces(self):
         self.pieces = []
         for row in range(BOARD_SIZE):
@@ -21,24 +20,26 @@ class Board:
                 else:
                     self.board[row].append("--")
         return self.pieces   
-
-    def get_piece(self, row, col):
-        return self.board[row][col]
-         
-
+ 
     def draw_board_pattern(self, window):
         for row in range(BOARD_SIZE):
                 for col in range(BOARD_SIZE):
                     square_color = WHITE if (row + col) % 2 == 0 else BLACK
                     pygame.draw.rect(window, square_color, (col * SQUARE_SIZE, row * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE))
 
+    def draw_pieces(self, WINDOW):
+        for row in self.board:
+                    for piece in row:
+                        if piece != "--":
+                            piece.draw_image(WINDOW) 
+
+    def get_piece(self, row, col):
+            return self.board[row][col]
+
     def validate_moves(self, moves):
         pass
 
-    def draw_moves(self, window, piece, moves):
+    def draw_moves(self, window, moves):
         for move in moves:
             row, col = move
             pygame.draw.circle(window, BLUE, (col * SQUARE_SIZE + SQUARE_SIZE//2 , row * SQUARE_SIZE + SQUARE_SIZE//2), (SQUARE_SIZE//2-PADDING), width = 0)
-
-    def move(self, piece):
-        pass

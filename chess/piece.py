@@ -25,6 +25,12 @@ class Piece:
     def load_img(self):
         return pygame.image.load(f"Images/{self.color}{self.rank}.svg")
 
+    def draw_image(self, WINDOW):
+        position = self.calc_image_position()
+        image = self.load_img()
+        scaled_image = pygame.transform.scale(image, (SQUARE_SIZE, SQUARE_SIZE))
+        WINDOW.blit(scaled_image, position) 
+
     def get_movement(self):
         possible_moves = []
         if self.rank == "K":
@@ -43,5 +49,10 @@ class Piece:
         elif self.rank == "P" and self.color == "w":
             possible_moves.extend(w_pawn_movement(self.position["row"], self.position["col"]))
         return possible_moves
+
+    def move(self, pos, WINDOW):
+        self.position["row"], self.position["col"] = pos
+        self.draw_image(WINDOW) 
+        self.movement = self.get_movement()
 
     

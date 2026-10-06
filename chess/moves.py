@@ -40,10 +40,9 @@ def x_movement(row, col):
     possible_moves = []
     for x in range(-BOARD_SIZE, BOARD_SIZE):
         possible_moves.append((row + x, col + x))
-    for x in range(-BOARD_SIZE, BOARD_SIZE):
         possible_moves.append((row - x, col + x))
-        if (0, 0) in possible_moves:
-            possible_moves.remove((row, col))
+    possible_moves.remove((row, col))
+    possible_moves.remove((row, col))
     return possible_moves
 
 def cross_movement(row, col):
