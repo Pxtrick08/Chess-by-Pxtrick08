@@ -43,3 +43,13 @@ class Board:
         for move in moves:
             row, col = move
             pygame.draw.circle(window, BLUE, (col * SQUARE_SIZE + SQUARE_SIZE//2 , row * SQUARE_SIZE + SQUARE_SIZE//2), (SQUARE_SIZE//2-PADDING), width = 0)
+
+    def move_piece(self, selected_piece, pos, WINDOW):
+            #Change old board position to "--"
+            self.board[selected_piece.position["row"]][selected_piece.position["col"]] = "--"
+            #Change position of the piece
+            selected_piece.position["row"], selected_piece.position["col"] = pos
+            #Change new board position to selected piece
+            self.board[selected_piece.position["row"]][selected_piece.position["col"]] = selected_piece
+            selected_piece.draw_image(WINDOW) 
+            selected_piece.movement = selected_piece.get_movement()

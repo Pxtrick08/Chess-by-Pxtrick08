@@ -6,6 +6,7 @@ from .constants import SQUARE_SIZE, BOARD_SIZE
 from .moves import *
 
 
+
 class Piece:
     def __init__(self, color, rank, start_pos):
         self.color = color
@@ -50,9 +51,6 @@ class Piece:
             possible_moves.extend(w_pawn_movement(self.position["row"], self.position["col"]))
         return possible_moves
 
-    def move(self, pos, WINDOW):
-        self.position["row"], self.position["col"] = pos
-        self.draw_image(WINDOW) 
-        self.movement = self.get_movement()
+    
 
     
